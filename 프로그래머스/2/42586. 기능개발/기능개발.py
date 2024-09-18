@@ -1,20 +1,20 @@
-import math
-
 def solution(progresses, speeds):
-    days_remaining = [math.ceil((100 - p) / s) for p, s in zip(progresses, speeds)]
-    
-    deployments = []
-    current_deploy_day = days_remaining[0]
+    answer = []
+    dates = []
     count = 0
     
-    for day in days_remaining:
-        if day <= current_deploy_day:
+    for p, s in zip(progresses, speeds):
+        date = -((p-100) // s)
+        dates.append(date)
+    
+    dates.append(float("inf"))
+    cnt_date = dates[0]
+    for date in dates:
+        if date <= cnt_date:
             count += 1
         else:
-            deployments.append(count)
-            current_deploy_day = day
+            answer.append(count)
+            cnt_date = date
             count = 1
-            
-    deployments.append(count)
     
-    return deployments
+    return answer
